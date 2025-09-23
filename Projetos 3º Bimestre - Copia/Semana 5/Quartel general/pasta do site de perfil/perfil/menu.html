@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Aventureiro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Paleta baseada na imagem medieval */
+    :root {
+      --cor-pedra: #d1b17a;
+      --cor-pedra-clara: #e4cfa0;
+      --cor-telhado: #c56a45;
+      --cor-telhado-escuro: #a3452f;
+      --cor-escuro: #2e2e2e;
+
+      --accent: #c56a45;
+      --glass-border: rgba(255,255,255,0.06);
+      --text: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+
+    body {
+      background: url("imagens/cidade_do_espantalho.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: var(--cor-escuro);
+    }
+
+    /* -------- MENU -------- */
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 1200;
+      background: rgba(12,12,12,0.08);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    header .left { display: flex; align-items: center; gap: 12px; }
+    header .nav { display: flex; gap: 20px; align-items: center; }
+    header .nav a {
+      color: #fff; text-decoration: none; font-weight: 600;
+      padding: 6px 10px; border-radius: 8px; transition: background 0.15s;
+    }
+    header .nav a:hover { background: rgba(255,255,255,0.04); }
+    header .nav a[aria-current="page"] { background: rgba(255,255,255,0.1); color: var(--accent); }
+    #btnMenu {
+      background: none; border: 0; color: #fff; font-size: 22px;
+      cursor: pointer; padding: 8px; border-radius: 8px; display: none;
+    }
+
+    .sidebar {
+      position: fixed; top: 80px; left: 0; width: 78%; max-width: 320px; bottom: 0;
+      z-index: 1300;
+      background: linear-gradient(180deg, rgba(12,12,12,0.14), rgba(12,12,12,0.08));
+      backdrop-filter: blur(8px);
+      transform: translateX(-110%);
+      transition: transform 0.28s ease;
+      border-right: 1px solid var(--glass-border);
+      padding: 16px; overflow: auto;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar h3 { color: #fff; margin: 6px 0 12px; font-size: 18px; }
+    .sidebar a {
+      display: flex; gap: 10px; align-items: center;
+      padding: 10px; text-decoration: none; color: #fff; border-radius: 8px;
+      margin-bottom: 6px; font-weight: 600;
+    }
+    .sidebar a:hover { background: rgba(255,255,255,0.04); }
+    .sidebar a[aria-current="page"] { background: rgba(255,255,255,0.1); color: var(--accent); }
+    .btn-close {
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer;
+      position: absolute; top: 16px; right: 16px;
+    }
+    .mobile-overlay {
+      position: fixed; inset: 0; z-index: 1280; background: rgba(0,0,0,0.45);
+      opacity: 0; visibility: hidden; transition: opacity 0.2s;
+    }
+    .mobile-overlay.show { opacity: 1; visibility: visible; }
+
+    /* -------- PERFIL -------- */
+    .perfil-container {
+      background: var(--cor-pedra-clara);
+      border: 8px solid var(--cor-telhado-escuro);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 95%;
+      padding: 25px;
+      box-shadow: 0 0 35px rgba(0,0,0,0.8);
+      backdrop-filter: blur(3px);
+      margin: 140px auto 40px;
+    }
+
+h1 {
+  text-align: center;
+  color: var(--cor-telhado-escuro);
+  text-shadow: 3px 3px 0px var(--cor-pedra);
+  font-family: "Cinzel", serif;
+  font-size: 64px; /* bem grande */
+  margin-bottom: 30px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--cor-telhado-escuro);
+  text-shadow: 2px 2px 0px var(--cor-pedra);
+  font-family: "Cinzel", serif;
+  font-size: 40px; /* subtítulo bem destacado */
+  margin-bottom: 20px;
+}
+
+
+
+    .personagem-armas {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+      min-width: 160px;
+    }
+
+    .card img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: contain;
+    }
+
+    .classes, .medalhas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .classes ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .classes li {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+
+    .classes span {
+      font-weight: bold;
+      color: var(--cor-telhado-escuro);
+    }
+
+    .medalhas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    .medalha-slot {
+      width: 80px;
+      height: 80px;
+      background: var(--cor-pedra-clara);
+      border: 3px solid var(--cor-telhado-escuro);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    }
+    .medalha-slot img { max-width: 100%; max-height: 100%; }
+
+    @media (max-width: 768px) {
+      header .nav { display: none; }
+      #btnMenu { display: inline-flex; }
+      .perfil-container { margin-top: 180px; }
+    }
+    @media (min-width: 769px) {
+      .sidebar { display: none !important; }
+      .mobile-overlay { display: none; }
+      #btnMenu { display: none; }
+      header .nav { display: flex; }
+    }
+  </style>
+</head>
+<body>
+  <!-- MENU -->
+  <header>
+    <div class="left">
+      <button id="btnMenu" aria-label="Abrir menu móvel">☰</button>
+      <img src="imagens/logo.png" alt="Cidade do Espantalho" class="logo" style="height:60px;">
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="site2.html">Relíquia</a>
+      <a href="placar.html">Placar</a>
+      <a href="pvp.html">PvP</a>
+      <a href="breve.html">Em breve...</a>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar" aria-hidden="true">
+    <h3>Menu</h3>
+    <button class="btn-close" aria-label="Fechar menu">✕</button>
+    <a href="index.html">🏠 Início</a>
+    <a href="site2.html">💎 Relíquia</a>
+    <a href="placar.html">🏆 Placar</a>
+    <a href="pvp.html">⚔️ PvP</a>
+    <a href="breve.html">🔮 Em breve...</a>
+  </aside>
+
+  <div id="mobileOverlay" class="mobile-overlay" aria-hidden="true"></div>
+
+  <!-- PERFIL -->
+  <div class="perfil-container">
+    <h1>Perfil do Aventureiro</h1>
+    <div class="personagem-armas">
+      <div class="card">
+        <img src="imagens/boneco_mendes_264.png" alt="Lucas Mendes">
+        <p>Lucas Mendes</p>
+      </div>
+      <div class="card">
+        <img src="imagens/arma_mendes_264.png" alt="Foice Sombria">
+        <p>Foice Sombria</p>
+      </div>
+    </div>
+
+    <div class="classes">
+      <h2>Classes</h2>
+      <ul>
+        <li>⚔️ Cavaleiro <span>Nv 4</span></li>
+        <li>✨ Mago <span>Nv 3</span></li>
+        <li>🛠️ Artífice <span>Nv 2</span></li>
+        <li>💰 Mercador <span>Nv 1</span></li>
+        <li>🌟 Herói <span>Nv 1</span></li>
+      </ul>
+    </div>
+
+    <div class="medalhas">
+      <h2>Medalhas</h2>
+      <div class="medalhas-grid">
+        <div class="medalha-slot"><img src="medalha1.png" alt="Medalha 1"></div>
+        <div class="medalha-slot"><img src="medalha2.png" alt="Medalha 2"></div>
+        <div class="medalha-slot"><img src="medalha3.png" alt="Medalha 3"></div>
+        <div class="medalha-slot"><img src="medalha4.png" alt="Medalha 4"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btnMenu = document.getElementById('btnMenu');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileOverlay');
+
+    function toggleMenu() {
+      const isOpen = sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+      sidebar.setAttribute('aria-hidden', !isOpen);
+      if (isOpen) sidebar.querySelector('a').focus();
+    }
+
+    btnMenu.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      sidebar.setAttribute('aria-hidden', 'true');
+      btnMenu.focus();
+    });
+    document.querySelectorAll('.sidebar a, .btn-close').forEach(el => {
+      el.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+        sidebar.setAttribute('aria-hidden', 'true');
+        btnMenu.focus();
+      });
+    });
+  </script>
+</body>
+</html>

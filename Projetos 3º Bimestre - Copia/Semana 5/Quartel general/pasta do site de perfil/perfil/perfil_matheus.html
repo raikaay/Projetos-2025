@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Aventureiro</title>
+  <style>
+    /* Paleta baseada na imagem medieval */
+    :root {
+      --cor-pedra: #d1b17a;
+      --cor-pedra-clara: #e4cfa0;
+      --cor-telhado: #c56a45;
+      --cor-telhado-escuro: #a3452f;
+      --cor-escuro: #2e2e2e;
+    }
+
+    body {
+      background: url("imagens/cidade_do_espantalho.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Georgia', serif;
+      color: var(--cor-escuro);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .perfil-container {
+      background: var(--cor-pedra-clara);
+      border: 8px solid var(--cor-telhado-escuro);
+      border-radius: 20px;
+      max-width: 900px;
+      width: 95%;
+      padding: 25px;
+      box-shadow: 0 0 35px rgba(0,0,0,0.8);
+      backdrop-filter: blur(3px);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: var(--cor-telhado-escuro);
+      text-shadow: 2px 2px 0px var(--cor-pedra);
+      font-family: "Cinzel", serif;
+    }
+
+    .personagem-armas {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+      min-width: 160px;
+    }
+
+    .card img {
+      max-width: 150px;
+      max-height: 150px;
+      object-fit: contain;
+    }
+
+    .classes {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .classes ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .classes li {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+
+    .classes span {
+      font-weight: bold;
+      color: var(--cor-telhado-escuro);
+    }
+
+    .medalhas {
+      background: var(--cor-pedra);
+      border: 4px double var(--cor-telhado-escuro);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .medalhas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-items: center;
+      margin-top: 12px;
+    }
+
+    .medalha-slot {
+      width: 80px;
+      height: 80px;
+      background: var(--cor-pedra-clara);
+      border: 3px solid var(--cor-telhado-escuro);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    }
+
+    .medalha-slot img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="perfil-container">
+    <!-- Cabeçalho -->
+    <h1>Perfil do Aventureiro</h1>
+
+    <!-- Personagem + Arma -->
+    <div class="personagem-armas">
+      <div class="card">
+        <img src="imagens/boneco_matheus.png" alt="Matheus Alves">
+        <p>Matheus Alves</p>
+      </div>
+      <div class="card">
+        <img src="imagens/arma_matheus.png" alt="Lâmina do Eclipse">
+        <p>Lâmina do Eclipse</p>
+      </div>
+    </div>
+
+    <!-- Classes -->
+    <div class="classes">
+      <h2>Classes</h2>
+      <ul>
+        <li>⚔️ Cavaleiro <span>Nv ?</span></li>
+        <li>✨ Mago <span>Nv ?</span></li>
+        <li>🛠️ Artífice <span>Nv ?</span></li>
+        <li>💰 Mercador <span>Nv ?</span></li>
+        <li>🌟 Herói <span>Nv ?</span></li>
+      </ul>
+    </div>
+
+    <!-- Medalhas -->
+    <div class="medalhas">
+      <h2>Medalhas</h2>
+      <div class="medalhas-grid">
+        <div class="medalha-slot"><img src="medalha1.png" alt="Medalha 1"></div>
+        <div class="medalha-slot"><img src="medalha2.png" alt="Medalha 2"></div>
+        <div class="medalha-slot"><img src="medalha3.png" alt="Medalha 3"></div>
+        <div class="medalha-slot"><img src="medalha4.png" alt="Medalha 4"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

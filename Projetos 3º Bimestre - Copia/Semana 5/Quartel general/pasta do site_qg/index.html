@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cidade do Espantalho</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Paleta baseada na imagem medieval */
+    :root {
+      --cor-pedra: #d1b17a;
+      --cor-pedra-clara: #e4cfa0;
+      --cor-telhado: #c56a45;
+      --cor-telhado-escuro: #a3452f;
+      --cor-verde: #486b3c;
+      --cor-ceu: #5da3d3;
+      --cor-ceu-claro: #87c5e0;
+      --cor-escuro: #2e2e2e;
+    }
+  </style>
+</head>
+<body class="bg-[var(--cor-pedra-clara)] text-[var(--cor-escuro)] font-sans">
+
+  <!-- NAVBAR -->
+  <header class="absolute top-0 left-0 w-full bg-[var(--cor-telhado-escuro)]/95 text-white z-50 shadow-lg">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+      <h1 class="text-2xl font-bold">Cidade do Espantalho</h1>
+      <nav class="space-x-6">
+        <a href="#aventureiros" class="hover:text-[var(--cor-ceu-claro)]">Aventureiros</a>
+        <a href="#missoes" class="hover:text-[var(--cor-ceu-claro)]">Missões</a>
+        <a href="#exploracoes" class="hover:text-[var(--cor-ceu-claro)]">Explorações</a>
+        <a href="#conquistas" class="hover:text-[var(--cor-ceu-claro)]">Conquistas</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="h-screen w-full relative">
+    <img src="imagens/cidade_do_espantalho.png" alt="Cidade do Espantalho" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-[var(--cor-escuro)]/40"></div>
+  </section>
+
+  <!-- AVENTUREIROS -->
+  <section id="aventureiros" class="py-16 bg-[var(--cor-pedra)]">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-12 text-[var(--cor-escuro)]">Aventureiros</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <div class="bg-white p-6 rounded-xl shadow-lg text-left border-t-4 border-[var(--cor-telhado)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Líder do Centro de Operações</h3>
+          <p class="text-lg font-bold">Lucas Mendes</p>
+          <p class="text-gray-700 mt-2">Responsável por organizar as tarefas atribuídas ao centro de operações e distribuir as tarefas entre os membros.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg text-left border-t-4 border-[var(--cor-verde)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-verde)]">Membro</h3>
+          <p class="text-lg font-bold">Guilherme Leitão</p>
+          <p class="text-gray-700 mt-2">Responsável pelas tarefas que o líder atribuir a ele.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg text-left border-t-4 border-[var(--cor-telhado)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Membro</h3>
+          <p class="text-lg font-bold">Lucas Souza</p>
+          <p class="text-gray-700 mt-2">Responsável pelas tarefas que o líder atribuir a ele.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg text-left border-t-4 border-[var(--cor-verde)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-verde)]">Membro</h3>
+          <p class="text-lg font-bold">Raika Oliveira</p>
+          <p class="text-gray-700 mt-2">Responsável pelas tarefas que o líder atribuir a ele.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg text-left border-t-4 border-[var(--cor-telhado)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Membro</h3>
+          <p class="text-lg font-bold">Richard Oliveira</p>
+          <p class="text-gray-700 mt-2">Responsável pelas tarefas que o líder atribuir a ele.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUADRO DE MISSÕES -->
+  <section id="missoes" class="py-16 bg-[var(--cor-ceu-claro)]/30">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12 text-[var(--cor-escuro)]">Quadro de Missões</h2>
+
+      <div id="quadro" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[var(--cor-verde)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-verde)]">Missão Semanal (Parte 1)</h3>
+          <p class="text-gray-700 mb-2">O QG convoca todos os aventureiros a forjarem seu boneco e arma de assinatura.</p>
+          <ul class="participantes list-disc pl-6 text-gray-700 mt-2"></ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[var(--cor-telhado)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Mago</h3>
+          <p class="text-gray-700 mb-2">Garantir que os sistemas da cidade sejam acessíveis e usáveis por todos.</p>
+          <ul class="participantes list-disc pl-6 text-gray-700 mt-2"></ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[var(--cor-verde)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-verde)]">Mercador</h3>
+          <p class="text-gray-700 mb-2">Torne-se um Grande Mercador conquistando a aprovação de quatro mestres.</p>
+          <ul class="participantes list-disc pl-6 text-gray-700 mt-2"></ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[var(--cor-telhado)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Cavaleiro e Artífice</h3>
+          <p class="text-gray-700 mb-2">Desenvolver um sistema de extermínio de hordas para fortalecer os aventureiros.</p>
+          <ul class="participantes list-disc pl-6 text-gray-700 mt-2"></ul>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[var(--cor-verde)]">
+          <h3 class="text-2xl font-semibold mb-2 text-[var(--cor-verde)]">Herói</h3>
+          <p class="text-gray-700 mb-2">Dois aventureiros com estrela devem liderar o grupo e fazer o bestiario dos de todos os mosntros que ja enfrentamos.</p>
+          <ul class="participantes list-disc pl-6 text-gray-700 mt-2"></ul>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <div class="bg-white p-6 rounded-xl shadow-lg mb-6 mt-12 border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-telhado-escuro)]">Entrar em uma Missão</h3>
+        <form id="formMissao" class="space-y-4">
+          <input type="text" id="nome" placeholder="Seu nome" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-telhado)]" required>
+          <select id="missao" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-verde)]" required>
+            <option value="">Selecione a missão</option>
+            <option value="Missão semanal parte 1">Missão semanal parte 1</option>
+            <option value="Mago">Mago</option>
+            <option value="Mercador">Mercador</option>
+            <option value="Cavaleiro e Artífice">Cavaleiro e Artífice</option>
+            <option value="Herói">Herói</option>
+          </select>
+          <button type="submit" class="bg-[var(--cor-telhado)] text-white px-6 py-3 rounded-lg shadow hover:bg-[var(--cor-telhado-escuro)]">Participar</button>
+        </form>
+      </div>
+
+      <!-- Botão Resetar -->
+      <div class="text-center mb-12">
+        <button id="resetar" class="bg-[var(--cor-verde)] text-white px-6 py-3 rounded-lg shadow hover:bg-green-900">Resetar Todas as Missões</button>
+      </div>
+
+      <!-- Sugestões -->
+      <div class="bg-white p-6 rounded-xl shadow-lg mb-6 border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-telhado-escuro)]">Sugerir Nova Missão</h3>
+        <form id="formSugestao" class="space-y-4">
+          <input type="text" id="sugestaoNome" placeholder="Seu nome" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-telhado)]" required>
+          <textarea id="sugestaoMissao" placeholder="Descreva a missão sugerida" class="w-full p-3 border rounded-lg h-32 focus:ring-2 focus:ring-[var(--cor-verde)]" required></textarea>
+          <button type="submit" class="bg-[var(--cor-verde)] text-white px-6 py-3 rounded-lg shadow hover:bg-green-900">Enviar Sugestão</button>
+        </form>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-lg border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-escuro)]">Missões Sugeridas (aguardando aprovação)</h3>
+        <ul id="listaSugestoes" class="list-disc pl-6 text-gray-700 space-y-2"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORAÇÕES -->
+  <section id="exploracoes" class="py-16 bg-[var(--cor-pedra-clara)]">
+    <h2 class="text-3xl font-bold mb-6 text-center text-[var(--cor-escuro)]">🌍 Explorações</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-[var(--cor-telhado)]">
+        <img src="imagens/pantano_maldito.png" alt="Pântano" class="w-full h-48 object-cover">
+        <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2">Pântano</div>
+      </div>
+
+      <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-[var(--cor-verde)]">
+        <img src="imagens/mina_magica.png" alt="Mina de Cristais" class="w-full h-48 object-cover">
+        <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2">Mina de Cristais</div>
+      </div>
+
+      <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-[var(--cor-telhado)]">
+        <img src="imagens/campo_mistico.png" alt="Campo Místico" class="w-full h-48 object-cover">
+        <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white text-center py-2">Campo Místico</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONQUISTAS -->
+  <section id="conquistas" class="py-16 bg-[var(--cor-ceu)]/20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-12 text-[var(--cor-escuro)]">Conquistas da Cidade</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-telhado)]">
+          <h3 class="text-xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Derrotar o Espantalho que assombrava o Vale e os moradores trazendo paz noavamente para os moradores.</h3>
+          <p class="text-gray-700">A cidade agora conta com muralhas resistentes.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-verde)]">
+          <h3 class="text-xl font-semibold mb-2 text-[var(--cor-verde)]">Impedimos a investida do Rei Goblin que tentava destruir a o Vale.</h3>
+          <p class="text-gray-700">Comércio estabelecido e rotas seguras.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-telhado)]">
+          <h3 class="text-xl font-semibold mb-2 text-[var(--cor-telhado-escuro)]">Derrotamos o Rei Goblin e mais uma vez o vale foi salvo de sua destruiçã</h3>
+          <p class="text-gray-700">Artefatos raros foram trazidos de minas distantes.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="py-8 bg-[var(--cor-telhado-escuro)] text-[var(--cor-pedra-clara)] text-center">
+    <p>&copy; 2025 Cidade do Espantalho — Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT DE PERSISTÊNCIA -->
+  <script>
+    const quadro = document.querySelectorAll("#quadro .bg-white");
+    const formMissao = document.getElementById("formMissao");
+    const formSugestao = document.getElementById("formSugestao");
+    const listaSugestoes = document.getElementById("listaSugestoes");
+    const resetar = document.getElementById("resetar");
+
+    // Carregar dados salvos
+    function carregar() {
+      const dados = JSON.parse(localStorage.getItem("dadosCidade")) || { missoes: {}, sugestoes: [] };
+
+      // Restaurar missões
+      quadro.forEach(div => {
+        const missao = div.dataset.missao;
+        const ul = div.querySelector(".participantes");
+        ul.innerHTML = "";
+        (dados.missoes[missao] || []).forEach(nome => {
+          const li = document.createElement("li");
+          li.textContent = nome;
+          ul.appendChild(li);
+        });
+      });
+
+      // Restaurar sugestões
+      listaSugestoes.innerHTML = "";
+      dados.sugestoes.forEach(s => {
+        const li = document.createElement("li");
+        li.textContent = `${s.nome}: ${s.texto}`;
+        listaSugestoes.appendChild(li);
+      });
+    }
+
+    // Salvar dados
+    function salvar() {
+      const dados = { missoes: {}, sugestoes: [] };
+
+      quadro.forEach(div => {
+        const missao = div.dataset.missao;
+        const nomes = Array.from(div.querySelectorAll(".participantes li")).map(li => li.textContent);
+        dados.missoes[missao] = nomes;
+      });
+
+      dados.sugestoes = Array.from(listaSugestoes.querySelectorAll("li")).map(li => {
+        const [nome, ...texto] = li.textContent.split(": ");
+        return { nome, texto: texto.join(": ") };
+      });
+
+      localStorage.setItem("dadosCidade", JSON.stringify(dados));
+    }
+
+    // Participar missão
+    formMissao.addEventListener("submit", e => {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value;
+      const missao = document.getElementById("missao").value;
+
+      if (!nome || !missao) return;
+
+      const div = document.querySelector(`[data-missao="${missao}"] .participantes`);
+      const li = document.createElement("li");
+      li.textContent = nome;
+      div.appendChild(li);
+
+      salvar();
+      formMissao.reset();
+    });
+
+    // Sugestão missão
+    formSugestao.addEventListener("submit", e => {
+      e.preventDefault();
+      const nome = document.getElementById("sugestaoNome").value;
+      const texto = document.getElementById("sugestaoMissao").value;
+
+      if (!nome || !texto) return;
+
+      const li = document.createElement("li");
+      li.textContent = `${nome}: ${texto}`;
+      listaSugestoes.appendChild(li);
+
+      salvar();
+      formSugestao.reset();
+    });
+
+    // Resetar
+    resetar.addEventListener("click", () => {
+      if (confirm("Tem certeza que deseja resetar todas as missões?")) {
+        localStorage.removeItem("dadosCidade");
+        carregar();
+      }
+    });
+
+    // Inicializar
+    carregar();
+  </script>
+</body>
+</html>
