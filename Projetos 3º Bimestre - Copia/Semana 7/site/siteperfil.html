@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Profile - Vale do Espantalho</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a0b3b 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            color: #f5f5f5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: linear-gradient(45deg, #c71585, #ffd700);
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+            box-shadow: 0 0 10px rgba(199, 21, 133, 0.7);
+        }
+
+        .star.pink {
+            background: #b19cd9;
+            box-shadow: 0 0 10px rgba(177, 156, 217, 0.9);
+        }
+
+        .star.blue {
+            background: #4b0082;
+            box-shadow: 0 0 10px rgba(75, 0, 130, 0.8);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .aura {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(177, 156, 217, 0.15) 0%, transparent 70%);
+            z-index: 1;
+            animation: auraPulse 8s infinite ease-in-out;
+        }
+
+        @keyframes auraPulse {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.3; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 50px 30px;
+            background: linear-gradient(45deg, rgba(199, 21, 133, 0.2), rgba(255, 215, 0, 0.2));
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: slideDown 1s ease;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(45deg, #c71585, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            color: #f5f5f5;
+            font-weight: 300;
+        }
+
+        .images-showcase {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            margin-bottom: 60px;
+            animation: slideUp 1.2s ease;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .image-container {
+            background: linear-gradient(45deg, rgba(26, 11, 59, 0.8), rgba(199, 21, 133, 0.3));
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            max-width: 300px;
+            flex: 1 1 300px;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .image-container:hover::before {
+            left: 100%;
+        }
+
+        .image-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+            border-color: #b19cd9;
+        }
+
+        .character-image-frame, .weapon-image-frame {
+            width: 220px;
+            height: 220px;
+            border: 3px solid rgba(177, 156, 217, 0.5);
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-image-frame:hover, .weapon-image-frame:hover {
+            transform: scale(1.1);
+            border-color: #b19cd9;
+            box-shadow: 0 0 25px rgba(177, 156, 217, 0.7);
+        }
+
+        .character-image-frame img, .weapon-image-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .image-placeholder {
+            font-size: 4em;
+            opacity: 0.8;
+            filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.6));
+            color: #b19cd9;
+        }
+
+        .image-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            color: #b19cd9;
+        }
+
+        .image-subtitle {
+            font-size: 1em;
+            opacity: 0.85;
+            color: #f5f5f5;
+            font-weight: 300;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .stats-section {
+            background: linear-gradient(45deg, rgba(26, 11, 59, 0.8), rgba(199, 21, 133, 0.3));
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.2s ease;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.15), rgba(75, 0, 130, 0.15));
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.3), rgba(75, 0, 130, 0.3));
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: #b19cd9;
+        }
+
+        .info-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            color: #f5f5f5;
+            font-weight: 400;
+        }
+
+        .info-value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        .classes-section {
+            background: linear-gradient(45deg, rgba(26, 11, 59, 0.8), rgba(199, 21, 133, 0.3));
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.4s ease;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .items-section {
+            background: linear-gradient(45deg, rgba(26, 11, 59, 0.8), rgba(199, 21, 133, 0.3));
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.5s ease;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .item-card {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.15), rgba(75, 0, 130, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .item-card.active {
+            background: linear-gradient(45deg, rgba(199, 21, 133, 0.25), rgba(255, 215, 0, 0.25));
+            border: 2px solid #c71585;
+            box-shadow: 0 0 20px rgba(199, 21, 133, 0.5);
+        }
+
+        .item-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .item-card:hover::before {
+            left: 100%;
+        }
+
+        .item-card:hover {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.3), rgba(75, 0, 130, 0.3));
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: #b19cd9;
+        }
+
+        .item-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #b19cd9;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .class-card {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.15), rgba(75, 0, 130, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .class-card:hover::before {
+            left: 100%;
+        }
+
+        .class-card:hover {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.3), rgba(75, 0, 130, 0.3));
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: #b19cd9;
+        }
+
+        .class-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #b19cd9;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .class-level {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #c71585;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .attacks-section {
+            background: linear-gradient(45deg, rgba(26, 11, 59, 0.8), rgba(199, 21, 133, 0.3));
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1.6s ease;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .attacks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .attack-card {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.15), rgba(75, 0, 130, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .attack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .attack-card:hover::before {
+            left: 100%;
+        }
+
+        .attack-card:hover {
+            background: linear-gradient(45deg, rgba(177, 156, 217, 0.3), rgba(75, 0, 130, 0.3));
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: #b19cd9;
+        }
+
+        .attack-key {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #c71585;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .attack-damage {
+            font-size: 1.2em; /* Increased size for damage numbers */
+            font-weight: 700;
+            color: #ffd700; /* Bright yellow for damage numbers */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .attack-effect {
+            font-size: 0.6em;
+            margin-top: 8px;
+            color: #f5f5f5; /* White color for consistency */
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .bleeding-attack {
+            background: linear-gradient(45deg, rgba(199, 21, 133, 0.25), rgba(255, 215, 0, 0.25));
+            border: 2px solid #c71585;
+        }
+
+        .special-attack {
+            background: linear-gradient(45deg, rgba(75, 0, 130, 0.25), rgba(199, 21, 133, 0.25));
+            border: 2px solid #c71585;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+            box-shadow: 0 0 20px rgba(199, 21, 133, 0.5);
+        }
+
+        .special-attack .attack-key {
+            font-size: 1.6em;
+        }
+
+        .special-attack .attack-damage {
+            font-size: 1.0em;
+        }
+
+        .special-attack .attack-effect {
+            font-size: 1.0em;
+        }
+
+        .special-attack::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .special-attack:hover::before {
+            left: 100%;
+        }
+
+        .special-attack:hover {
+            background: linear-gradient(45deg, rgba(75, 0, 130, 0.4), rgba(199, 21, 133, 0.4));
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(199, 21, 133, 0.7);
+            border-color: #b19cd9;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(45deg, #c71585, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(177, 156, 217, 0.4), transparent);
+            margin: 20px 0;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            position: absolute;
+            background: linear-gradient(45deg, #4b0082, #c71585);
+            color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            z-index: 10;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: visibility 0.2s, opacity 0.2s;
+            opacity: 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+        }
+
+        .attack-card:hover .tooltip, .special-attack:hover .tooltip, .item-card:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(45deg, #1a0b3b, #c71585);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 550px;
+            text-align: center;
+            color: #f5f5f5;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(177, 156, 217, 0.4);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.6em;
+            cursor: pointer;
+            color: #b19cd9;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #c71585;
+        }
+
+        @media (max-width: 1024px) {
+            .images-showcase {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-grid, .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .character-image-frame, .weapon-image-frame {
+                width: 180px;
+                height: 180px;
+            }
+
+            .image-placeholder {
+                font-size: 3.2em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .info-value {
+                font-size: 1.4em;
+            }
+
+            .attack-key {
+                font-size: 1.2em;
+            }
+
+            .attack-damage {
+                font-size: 1.0em; /* Adjusted for smaller screens */
+            }
+
+            .attack-effect, .item-name {
+                font-size: 0.75em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="aura"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Perfil da Aventureira Raika</h1>
+            <p>Vale do Espantalho</p>
+        </header>
+
+        <div class="images-showcase">
+            <div class="image-container">
+                <div class="character-image-frame">
+                    <img src="eu_raika.png" alt="Raika - Aventureira do Vale do Espantalho" />
+                </div>
+                <h3 class="image-title">Raika</h3>
+                <p class="image-subtitle">Herói do Vale</p>
+            </div>
+
+            <div class="image-container">
+                <div class="weapon-image-frame">
+                    <img src="minha_arma.png" alt="Arma Assinatura de Raika" />
+                </div>
+                <h3 class="image-title">Lâmina do Destino</h3>
+                <p class="image-subtitle">Arma Assinatura</p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="stats-section">
+                <h2 class="section-title">Estatísticas</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">Aventureiro</div>
+                        <div class="info-value" style="color: #b19cd9; font-size: 1.8em;">Raika</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Vida</div>
+                        <div class="info-value" style="color: #ffd700;">40</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Nível</div>
+                        <div class="info-value" style="color: #c71585;">8</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Vila</div>
+                        <div class="info-value" style="color: #f5f5f5; font-size: 1.8em;">Vale do Espantalho</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="classes-section">
+                <h2 class="section-title">Classes</h2>
+                <div class="classes-grid">
+                    <div class="class-card" data-class="artifice">
+                        <div class="class-name">Artífice</div>
+                        <div class="class-level">1</div>
+                    </div>
+                    <div class="class-card" data-class="cavaleiro">
+                        <div class="class-name">Cavaleiro</div>
+                        <div class="class-level">3</div>
+                    </div>
+                    <div class="class-card" data-class="mago">
+                        <div class="class-name">Mago</div>
+                        <div class="class-level">1</div>
+                    </div>
+                    <div class="class-card" data-class="mercador">
+                        <div class="class-name">Mercador</div>
+                        <div class="class-level">3</div>
+                    </div>
+                    <div class="class-card" data-class="heroi">
+                        <div class="class-name">Herói</div>
+                        <div class="class-level">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="items-section">
+                <h2 class="section-title">Itens</h2>
+                <div class="items-grid">
+                    <div class="item-card">
+                        <div class="item-name">Arma Fraca</div>
+                        <div class="tooltip">Pouco dano, mas confiável</div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-name">Martelo</div>
+                        <div class="tooltip">Impacto pesado</div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-name">A Bolha</div>
+                        <div class="tooltip">Defesa mágica</div>
+                    </div>
+                    <div class="item-card active">
+                        <div class="item-name">Veneno</div>
+                        <div class="tooltip">Em uso: Envenena inimigos</div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-name">Clava Enfeitiçada</div>
+                        <div class="tooltip">Encantada com magia</div>
+                    </div>
+                    <div class="item-card">
+                        <div class="item-name">Luvas de Golem</div>
+                        <div class="tooltip">Dano 8 nas cartas A, 2 e 6; 15 após 3 danos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="attacks-section">
+                <h2 class="section-title">Cartas de Ataque</h2>
+                <div class="attacks-grid">
+                    <div class="attack-card">
+                        <div class="attack-key">A</div>
+                        <div class="attack-damage">8</div>
+                        <div class="attack-effect">Se acumular 3, 15D</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">2</div>
+                        <div class="attack-damage">8</div>
+                        <div class="attack-effect">Se acumular 3, 15D</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">3</div>
+                        <div class="attack-damage">2</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">4</div>
+                        <div class="attack-damage">3</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">5</div>
+                        <div class="attack-damage">2</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">6</div>
+                        <div class="attack-damage">8</div>
+                        <div class="attack-effect">Se acumular 3, 15D</div>
+                    </div>
+                    <div class="attack-card bleeding-attack">
+                        <div class="attack-key">7</div>
+                        <div class="attack-damage">4</div>
+                        <div class="attack-effect">+3 Sangramento 🩸</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">8</div>
+                        <div class="attack-damage">0</div>
+                    </div>
+                    <div class="attack-card bleeding-attack">
+                        <div class="attack-key">9</div>
+                        <div class="attack-damage">4</div>
+                        <div class="attack-effect">+3 Sangramento 🩸</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">10</div>
+                        <div class="attack-damage">0</div>
+                    </div>
+                    <div class="attack-card">
+                        <div class="attack-key">J</div>
+                        <div class="attack-damage">0</div>
+                        <div class="attack-effect">Impede dano ≥ 3</div>
+                    </div>
+                </div>
+                <div class="special-attack">
+                    <div class="attack-key">Especial</div>
+                    <div class="attack-damage">Todos do grupo derem dano</div>
+                    <div class="attack-effect">11 de dano nas 2 primeiras rodas e 9 nas demais</div>
+                    <div class="tooltip">Impacto Grupal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="classModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        // Criar estrelas animadas no fundo com parallax
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star' + (Math.random() > 0.7 ? ' pink' : Math.random() > 0.4 ? ' blue' : '');
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 4 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.dataset.depth = Math.random() * 0.5 + 0.5;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Adicionar parallax ao mover o mouse
+        function addParallax() {
+            const stars = document.querySelectorAll('.star');
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth - 0.5;
+                const mouseY = e.clientY / window.innerHeight - 0.5;
+                stars.forEach(star => {
+                    const depth = parseFloat(star.dataset.depth);
+                    const moveX = mouseX * 15 * depth;
+                    const moveY = mouseY * 15 * depth;
+                    star.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            });
+        }
+
+        // Adicionar efeitos sonoros simulados (visual feedback)
+        function addClickEffects() {
+            const clickableElements = document.querySelectorAll('.info-card, .class-card, .attack-card, .special-attack, .item-card, .image-container');
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    createParticles(this);
+                });
+            });
+        }
+
+        // Criar efeito de partículas ao clicar
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.background = i % 3 === 0 ? '#c71585' : i % 3 === 1 ? '#ffd700' : '#b19cd9';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                particle.style.boxShadow = `0 0 12px ${particle.style.background}`;
+                document.body.appendChild(particle);
+                const angle = (i / 10) * Math.PI * 2;
+                const velocity = 150;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                let x = 0, y = 0;
+                const animate = () => {
+                    x += vx * 0.02;
+                    y += vy * 0.02;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                    particle.style.opacity = Math.max(0, 1 - Math.abs(x) / 150);
+                    if (Math.abs(x) < 150) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                animate();
+            }
+        }
+
+        // Adicionar modal para detalhes de classe
+        function addClassModal() {
+            const modal = document.getElementById('classModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const closeBtn = document.querySelector('.modal-close');
+            const classCards = document.querySelectorAll('.class-card');
+            const classDetails = {
+                artifice: { title: 'Artífice', description: 'Mestre em criar e reparar artefatos mágicos, infundindo tecnologia com magia.' },
+                cavaleiro: { title: 'Cavaleiro', description: 'Defensor valente com armadura pesada, jurado a proteger o Vale.' },
+                mago: { title: 'Mago', description: 'Conjurador de feitiços poderosos, manipulando as forças arcanas.' },
+                mercador: { title: 'Mercador', description: 'Habilidoso em negociações, trazendo riquezas e recursos ao grupo.' },
+                heroi: { title: 'Herói', description: 'Lenda destinada a grandes feitos, inspirando todos ao seu redor.' }
+            };
+            classCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const classType = card.getAttribute('data-class');
+                    modalTitle.textContent = classDetails[classType].title;
+                    modalDescription.textContent = classDetails[classType].description;
+                    modal.style.display = 'flex';
+                });
+            });
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            addParallax();
+            addClickEffects();
+            addClassModal();
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            const elements = document.querySelectorAll('.info-card, .class-card, .attack-card, .special-attack, .item-card, .image-container');
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
