@@ -1,0 +1,178 @@
+
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG - Aventureiro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #4682B4; /* Fundo mais escuro */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #4B0082;
+            padding: 10px;
+            background-color: #D8BFD8;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4B0082;
+        }
+        .section {
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+        .image-placeholder {
+            width: 264px;
+            height: 264px;
+            border: 2px dashed #4B0082;
+            margin: 10px auto;
+            box-sizing: border-box;
+            background-color: #E6E6FA;
+        }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .medal-placeholder {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            box-sizing: border-box;
+            background-color: #E6E6FA;
+        }
+        .medal-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .status, .levels {
+            width: 200px;
+            border: 2px solid #4B0082;
+            padding: 10px;
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: top;
+            background-color: #E6E6FA;
+        }
+        .medals, .attacks {
+            width: 100%;
+            border: 2px solid #4B0082;
+            margin: 10px 0;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #E6E6FA;
+        }
+        .medals-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .weapon {
+            width: 264px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .weapon .image-placeholder {
+            border: 2px dashed #4B0082;
+            background-color: #E6E6FA;
+        }
+        .weapon img {
+            width: 264px;
+            height: 264px;
+            box-sizing: border-box;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #800080; /* Cor de destaque mais vibrante (roxo médio) */
+        }
+        p {
+            margin: 5px 0;
+            color: #4B0082;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Raika</div>
+        <div class="section">
+            <div class="image-placeholder">
+                <img src="personagem.png" alt="Imagem do personagem">
+            </div>
+        </div>
+        <div class="section">
+            <div class="status">
+                <p class="subtitle">Status:</p>
+                <p>Vida: 90</p>
+                <p>Nível Total: 18</p>
+                <p>Moedas: </p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="levels">
+                <p class="subtitle">Nível Por Classe:</p>
+                <p>Mago: 3</p>
+                <p>Mercador: 4</p>
+                <p>Artificer: 4</p>
+                <p>Cavaleiro: 4</p>
+                <p>Herói: 3</p>
+            </div>
+        </div>
+        <div class="medals">
+            <p class="subtitle">Espaço para Medalhas:</p>
+            <div class="medals-grid">
+                <div class="medal-placeholder"><img src="medalha1.png" alt="Medalha 1"></div>
+                <div class="medal-placeholder"><img src="medalha2.png" alt="Medalha 2"></div>
+                <div class="medal-placeholder"><img src="medalha3.png" alt="Medalha 3"></div>
+                <div class="medal-placeholder"><img src="medalha4.png" alt="Medalha 4"></div>
+                <div class="medal-placeholder"><img src="medalha5.png" alt="Medalha 5"></div>
+                <div class="medal-placeholder"><img src="medalha6.png" alt="Medalha 6"></div>
+                <div class="medal-placeholder"><img src="medalha7.png" alt="Medalha 7"></div>              
+            </div>
+        </div>
+        <div class="attacks">
+            <p class="subtitle">ataques:</p>
+            <p>A - 8 de dano</p>
+            <p>2 - 8 de dano</p>
+            <p>3 - 2 de dano</p>
+            <p>4 - 3 de dano</p>
+            <p>5 - 2 de dano</p>
+            <p>6 - 8 de dano</p>
+            <p>7 - 4 + sangamento de dano</p>
+            <p>8 - 5 de dano</p>
+            <p>9 - 4 + sangramento de dano</p>
+            <p>10 - 8 de dano</p>
+            <p>J - eu e nem o inimigo ataca se o dano for => 3</p>
+            <p>Q - nada</p>
+            <p>K - vai impedir o turno do boss e vou dar o dobro no próximo</p>
+        </div>
+        <div class="section">
+            <div class="weapon">
+                <p>Lâmina do Crepúsculo</p>
+                <div class="image-placeholder">
+                    <img src="cajado.png" alt="Imagem da arma">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
