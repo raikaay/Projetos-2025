@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Arena: Onde Lendas se Encontram - Chaveamento de torneios e inscrição para batalhas.">
+    <meta name="keywords" content="Arena, torneio, RPG, fantasia, chaveamento">
+    <meta name="author" content="Grupo Wasabi">
+    <title>Arena (Onde Lendas se Encontram)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-start: #3c2f1b;
+            --bg-end: #1f140a;
+            --text-color: #f0e4c2;
+            --bronze: #b89a5f;
+            --gold: #f2c94c;
+            --wood: #5a4327;
+            --shadow: rgba(0, 0, 0, 0.6);
+            --parchment-light: #f7edd5;
+            --parchment-dark: #3c2f1b;
+            --glow: rgba(242, 201, 76, 0.3);
+        }
+        [data-theme="light"] {
+            --bg-start: #f7edd5;
+            --bg-end: #e2d4a8;
+            --text-color: #2b1e12;
+            --bronze: #9b7e46;
+            --gold: #d4a017;
+            --wood: #6b532f;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --glow: rgba(212, 160, 23, 0.3);
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'IM Fell English', serif;
+            background: linear-gradient(to bottom, var(--bg-start), var(--bg-end));
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            font-weight: 700;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2N8+vTpfwYGBgYGBgYGphkYGBgYGBgYGBgYGBgYGAA8nAX/9W3bOAAAAAElFTkSuQmCC') repeat, radial-gradient(circle, var(--glow) 0%, transparent 70%) 50% 50% / 200% 200%;
+            opacity: 0.2;
+            z-index: -1;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { background-position: 50% 50%, 20% 20%; }
+            50% { background-position: 50% 50%, 80% 80%; }
+        }
+        header {
+            background: linear-gradient(135deg, var(--bronze), var(--gold));
+            width: 100%;
+            box-shadow: 0 10px 30px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 5px solid var(--wood);
+        }
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            display: block;
+            height: 4px;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 4"%3E%3Cpath d="M0,2 h25 l5,2 l5,-2 h30 l5,2 l5,-2 h25" stroke="%23b89a5f" fill="none"/%3E%3C/svg%3E') repeat-x;
+            margin-top: 20px;
+        }
+        .header h1 {
+            color: #2b1e12;
+            font-family: 'Uncial Antiqua', serif;
+            font-weight: 400;
+            font-size: 4.5em;
+            margin: 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 4px;
+        }
+        .header .logo {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--parchment-light);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            border: 3px solid var(--bronze);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--bronze);
+            transform: scale(1.15);
+            box-shadow: 0 0 10px var(--glow);
+        }
+        .theme-toggle i {
+            color: #2b1e12;
+            font-size: 1.4em;
+        }
+        .nav-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav-button {
+            background: linear-gradient(135deg, var(--bronze), var(--gold));
+            color: #2b1e12;
+            font-family: 'IM Fell English', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            padding: 12px 24px;
+            border: 3px solid var(--wood);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .nav-button:hover {
+            background: linear-gradient(135deg, var(--gold), var(--bronze));
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        .section {
+            background: rgba(90, 67, 39, 0.95);
+            border: 4px solid var(--bronze);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 20px auto;
+            width: 95%;
+            max-width: 1400px;
+            box-shadow: 0 12px 30px var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.7s ease forwards;
+        }
+        .section h2 {
+            color: var(--gold);
+            font-family: 'Uncial Antiqua', serif;
+            font-size: 2.9em;
+            margin: 0 0 30px;
+            padding-left: 50px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .section h2::before {
+            content: '\f0d7';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--bronze);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.9em;
+        }
+        .section p, .section textarea, .section input, .section select {
+            font-family: 'IM Fell English', serif;
+            font-size: 1.5em;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+        /* Bracket Styling */
+        .bracket {
+            display: flex;
+            align-items: stretch;
+            overflow-x: auto;
+            padding: 20px;
+            position: relative;
+        }
+        .round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 0 30px;
+            position: relative;
+        }
+        .match {
+            background: var(--parchment-light);
+            border: 3px solid var(--bronze);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            min-width: 120px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .match:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+        .player {
+            background: var(--wood);
+            border: 2px solid var(--bronze);
+            border-radius: 10px;
+            padding: 8px;
+            margin: 5px 0;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+        .arrow {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--bronze);
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            content: '\f061';
+        }
+        .arrow::before {
+            content: '\f061';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        /* Form and Button Styling */
+        .form-group {
+            margin: 20px 0;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.5em;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: var(--wood);
+            border: 3px solid var(--bronze);
+            border-radius: 15px;
+            color: var(--text-color);
+            font-size: 1.5em;
+            font-weight: 700;
+            box-shadow: inset 0 3px 6px var(--shadow);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--glow);
+        }
+        .submit-button {
+            background: linear-gradient(135deg, var(--bronze), var(--gold));
+            color: #2b1e12;
+            font-family: 'IM Fell English', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            padding: 15px 30px;
+            border: 3px solid var(--wood);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+        .submit-button:hover {
+            background: linear-gradient(135deg, var(--gold), var(--bronze));
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        /* Animation */
+        .section, .match {
+            opacity: 0;
+            transform: translateY(60px);
+            animation: fadeInUp 0.7s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--bg-start), var(--wood));
+            color: var(--bronze);
+            width: 100%;
+            text-align: center;
+            padding: 35px 0;
+            margin-top: auto;
+            border-top: 4px solid var(--bronze);
+        }
+        footer p {
+            margin: 0;
+            font-size: 1.4em;
+            font-family: 'IM Fell English', serif;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px var(--shadow);
+        }
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 3.8em;
+            }
+            .section h2 {
+                font-size: 2.5em;
+            }
+            .match {
+                min-width: 100px;
+                padding: 10px;
+            }
+            .player {
+                font-size: 1.3em;
+            }
+            .arrow {
+                right: -20px;
+                font-size: 20px;
+            }
+            .form-group input, .form-group textarea, .form-group select {
+                font-size: 1.4em;
+            }
+            .submit-button {
+                font-size: 1.4em;
+            }
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 3em;
+            }
+            .section h2 {
+                font-size: 2.2em;
+            }
+            .match {
+                min-width: 80px;
+            }
+            .player {
+                font-size: 1.2em;
+            }
+            .form-group input, .form-group textarea, .form-group select {
+                font-size: 1.3em;
+            }
+            body::before {
+                background-size: 150% 150%;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <header>
+        <div class="header">
+            <div class="logo"></div>
+            <h1>Arena (Onde Lendas se Encontram)</h1>
+            <button class="theme-toggle" title="Alternar Tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-container">
+        <a href="catalogo.html" class="nav-button">Catálogo</a>
+        <a href="placar.html" class="nav-button">Placar</a>
+    </div>
+
+    <div class="section">
+        <h2>Chaveamento dos Vencedores</h2>
+        <div class="bracket">
+            <div class="round">
+                <div class="match"><div class="player">1</div><div class="player">2</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">3</div><div class="player">4</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">5</div><div class="player">6</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">7</div><div class="player">8</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">9</div><div class="player">10</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">11</div><div class="player">12</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">13</div><div class="player">14</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">15</div><div class="player">16</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">17</div><div class="player">18</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">19</div><div class="player">20</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">21</div><div class="player">22</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">23</div><div class="player">24</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">1</div><div class="player">4</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">5</div><div class="player">8</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">10</div><div class="player">11</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">14</div><div class="player">15</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">17</div><div class="player">19</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">22</div><div class="player">24</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">1</div><div class="player">5</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">10</div><div class="player">15</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">17</div><div class="player">24</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">7</div><div class="player">5</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">15</div><div class="player">24</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">5 (Campeão)</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Chaveamento dos Perdedores</h2>
+        <div class="bracket">
+            <div class="round">
+                <div class="match"><div class="player">2</div><div class="player">3</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">6</div><div class="player">7</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">9</div><div class="player">12</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">13</div><div class="player">16</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">18</div><div class="player">20</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">21</div><div class="player">23</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">3</div><div class="player">6</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">9</div><div class="player">16</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">18</div><div class="player">23</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">3</div><div class="player">9</div><span class="arrow"></span></div>
+                <div class="match"><div class="player">16</div><div class="player">23</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">3</div><div class="player">23</div><span class="arrow"></span></div>
+            </div>
+            <div class="round">
+                <div class="match"><div class="player">23 (Vencedor)</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Visitantes para Batalha</h2>
+        <p>Lorde Valquíria</p>
+    </div>
+
+    <div class="section">
+        <h2>Mural de Recados (Comunidade)</h2>
+        <textarea placeholder="Escreva seu recado" rows="4"></textarea>
+        <button class="submit-button" onclick="alert('Recado enviado!')">Enviar</button>
+    </div>
+
+    <div class="section">
+        <h2>História da Arena</h2>
+        <p>A Arena foi fundada em 1080 por Sir Cedric, um lendário cavaleiro, como um local de honra e glória para os guerreiros de Eldoria.</p>
+    </div>
+
+    <div class="section">
+        <h2>Localização</h2>
+        <p>Eldoria - Detalhes a serem preenchidos.</p>
+    </div>
+
+    <div class="section">
+        <h2>Formulário de Inscrição</h2>
+        <div class="form-group">
+            <label for="warrior-name">Nome do Guerreiro</label>
+            <input type="text" id="warrior-name" placeholder="Ex: Sir Alaric" required>
+        </div>
+        <div class="form-group">
+            <label for="warrior-age">Idade</label>
+            <input type="number" id="warrior-age" placeholder="Ex: 25" required>
+        </div>
+        <div class="form-group">
+            <label for="warrior-weapon">Escolha sua Arma</label>
+            <select id="warrior-weapon">
+                <option value="adaga">Adaga</option>
+                <option value="foice">Foice</option>
+                <option value="espadaFraca">Espada Fraca</option>
+                <option value="vela">Vela</option>
+                <option value="manopla">Manopla</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="warrior-story">Fale sobre sua Jornada</label>
+            <textarea id="warrior-story" placeholder="Conte sua história..." rows="4"></textarea>
+        </div>
+        <button class="submit-button" onclick="submitForm()">Inscreva-se</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Grupo Wasabi. Todos os direitos reservados.</p>
+    </footer><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cidade do Espantalho</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+      box-sizing: border-box;
+    }
+
+    /* Paleta baseada na imagem medieval */
+    :root {
+      --cor-pedra: #d1b17a;
+      --cor-pedra-clara: #f3e6cc;
+      --cor-telhado: #c56a45;
+      --cor-telhado-escuro: #a3452f;
+      --cor-verde: #486b3c;
+      --cor-ceu: #5da3d3;
+      --cor-ceu-claro: #87c5e0;
+      --cor-escuro: #2e2e2e;
+      --glass-border: rgba(255,255,255,0.06);
+    }
+
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: var(--cor-escuro);
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1200;
+      background: rgba(12,12,12,0.2);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    header .left { display: flex; align-items: center; gap: 12px; }
+    header .nav { display: flex; gap: 20px; align-items: center; }
+    header .nav a {
+      color: #fff; text-decoration: none; font-weight: 600;
+      padding: 6px 10px; border-radius: 8px; transition: background 0.15s;
+    }
+    header .nav a:hover { background: rgba(255,255,255,0.04); }
+    header .nav a[aria-current="page"] { background: rgba(255,255,255,0.1); color: var(--cor-telhado); }
+
+    #btnMenu {
+      background: none; border: 0; color: #fff; font-size: 22px;
+      cursor: pointer; padding: 8px; border-radius: 8px; display: none;
+    }
+
+    .sidebar {
+      position: fixed; top: 80px; left: 0; width: 78%; max-width: 320px; bottom: 0;
+      z-index: 1300;
+      background: linear-gradient(180deg, rgba(12,12,12,0.14), rgba(12,12,12,0.08));
+      backdrop-filter: blur(8px);
+      transform: translateX(-110%);
+      transition: transform 0.28s ease;
+      border-right: 1px solid var(--glass-border);
+      padding: 16px; overflow: auto;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar h3 { color: #fff; margin: 6px 0 12px; font-size: 18px; }
+    .sidebar a {
+      display: flex; gap: 10px; align-items: center;
+      padding: 10px; text-decoration: none; color: #fff; border-radius: 8px;
+      margin-bottom: 6px; font-weight: 600;
+    }
+    .sidebar a:hover { background: rgba(255,255,255,0.04); }
+    .sidebar a[aria-current="page"] { background: rgba(255,255,255,0.1); color: var(--cor-telhado); }
+    .btn-close {
+      background: none; border: none; color: #fff; font-size: 18px; cursor: pointer;
+      position: absolute; top: 16px; right: 16px;
+    }
+
+    .mobile-overlay {
+      position: fixed; inset: 0; z-index: 1280; background: rgba(0,0,0,0.45);
+      opacity: 0; visibility: hidden; transition: opacity 0.2s;
+    }
+    .mobile-overlay.show { opacity: 1; visibility: visible; }
+
+    .acessibilidade-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--cor-telhado); color: var(--cor-pedra-clara);
+      border: none; border-radius: 50%; width: 56px; height: 56px; font-size: 26px;
+      cursor: pointer; z-index: 2000; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    .painel-acessibilidade {
+      position: fixed; bottom: 90px; right: 20px; background: var(--cor-pedra);
+      border-radius: 12px; padding: 12px; display: none; flex-direction: column; gap: 10px;
+      z-index: 1999; width: 240px;
+    }
+    .painel-acessibilidade.active { display: flex; }
+    .painel-acessibilidade button {
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      background: var(--cor-pedra-clara);
+      color: #000;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .painel-acessibilidade button:hover {
+      background: #e6d48f;
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 768px) {
+      header .nav { display: none; }
+      #btnMenu { display: inline-flex; }
+      .main { margin-top: 100px; }
+    }
+
+    @media (min-width: 769px) {
+      .sidebar { display: none !important; }
+      .mobile-overlay { display: none; }
+      #btnMenu { display: none; }
+      header .nav { display: flex; }
+    }
+
+    @supports not (backdrop-filter: blur(6px)) {
+      header { background: rgba(12,12,12,0.5); }
+      .sidebar { background: rgba(12,12,12,0.5); }
+    }
+
+    .aventureiro-card img {
+      width: 264px;
+      height: 264px;
+      object-fit: contain;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .aventureiro-card img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="bg-[var(--cor-pedra-clara)] text-[var(--cor-escuro)] font-sans">
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="left">
+      <button id="btnMenu" aria-label="Abrir menu móvel">☰</button>
+      <h1 class="text-2xl font-bold text-white">Cidade do Espantalho</h1>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="prefeitura.html">Prefeitura</a>
+      <a href="casa_da_moeda.html">Casa da moeda</a>
+      <a href="jornal.html">Jornal</a>
+      <a href="producao.html">Produção</a>
+      <a href="mercadao.html">Mercadão</a>
+    </nav>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar" aria-hidden="true">
+    <h3>Menu</h3>
+    <button class="btn-close" aria-label="Fechar menu">✕</button>
+    <a href="prefeitura.html">Prefeitura</a>
+    <a href="casa_da_moeda.html">📋 Casa da moeda</a>
+    <a href="jornal.html">🏆 Jornal</a>
+    <a href="producao.html">🗺️ Produção</a>
+    <a href="mercadao.htm">🏆 Mercadão</a>
+  </aside>
+
+  <div id="mobileOverlay" class="mobile-overlay" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="h-screen w-full relative">
+    <img src="imagens/cidade_do_espantalho.png" alt="Cidade do Espantalho" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-[var(--cor-escuro)]/40"></div>
+  </section>
+
+  <!-- AVENTUREIROS -->
+  <section id="aventureiros" class="py-16 bg-[var(--cor-pedra)]">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-12 text-[var(--cor-escuro)]">Aventureiros</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Top Row -->
+        <div class="aventureiro-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-telhado)]">
+          <a href="perfil_mendes.html">
+            <img src="imagens/boneco_mendes_264.png" alt="Lucas Mendes" class="rounded-t-xl mb-4">
+          </a>
+          <p class="text-lg font-bold text-center">Lucas Mendes</p>
+        </div>
+        <div class="aventureiro-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-verde)]">
+          <a href="perfil-guilherme-leitao.html">
+            <img src="imagens/personagem_gui_264.png" alt="Guilherme Leitão" class="rounded-t-xl mb-4">
+          </a>
+          <p class="text-lg font-bold text-center">Guilherme Leitão</p>
+        </div>
+        <!-- Bottom Row -->
+        <div class="aventureiro-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-telhado)]">
+          <a href="perfil-lucas-souza.html">
+            <img src="imagens/boneco_lucas_264x264.png" alt="Lucas Souza" class="rounded-t-xl mb-4">
+          </a>
+          <p class="text-lg font-bold text-center">Lucas Souza</p>
+        </div>
+        <div class="aventureiro-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-verde)]">
+          <a href="perfil-raika-oliveira.html">
+            <img src="imagens/boneca_raika (1)_264x264.png" alt="Raika Oliveira" class="rounded-t-xl mb-4">
+          </a>
+          <p class="text-lg font-bold text-center">Raika Oliveira</p>
+        </div>
+      </div>
+      <!-- Richard Centered Below -->
+      <div class="mt-8 flex justify-center">
+        <div class="aventureiro-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-[var(--cor-telhado)] w-full md:w-1/2">
+          <a href="perfil-richard-oliveira.html">
+            <img src="imagens/richard.boneco_264x264.png" alt="Richard Oliveira" class="rounded-t-xl mb-4">
+          </a>
+          <p class="text-lg font-bold text-center">Richard Oliveira</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSÕES -->
+  <section id="missoes" class="py-16 bg-[var(--cor-pedra)]">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold mb-12 text-center text-[var(--cor-escuro)]">Missões</h2>
+      <div class="text-center mb-8 space-x-4">
+        <button id="showFinais" class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 rounded-lg shadow hover:bg-[var(--cor-telhado)]">Missões Finais</button>
+        <button id="showPrincipais" class="bg-[var(--cor-telhado)] text-white px-6 py-3 rounded-lg shadow hover:bg-[var(--cor-telhado-escuro)]">Missões Principais</button>
+        <button id="showBonus" class="bg-[var(--cor-verde)] text-white px-6 py-3 rounded-lg shadow hover:bg-green-900">Missões Bonus</button>
+      </div>
+      <div id="quadro" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- Missões Principais -->
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado)] missao-principal" data-missao="Missão semanal parte 1">
+          <div class="bg-[var(--cor-telhado)] text-white px-6 py-3 font-bold text-xl">
+            Missão semanal parte 1 — Perfil do Aventureiro
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos os aventureiros</p>
+            <p class="text-gray-700">Fazer sua página de perfil. Nela deve conter: seu boneco e sua arma, suas informações e um espaço para colocar medalhas adquiridas.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado)] missao-principal" data-missao="Artificer e Mago">
+          <div class="bg-[var(--cor-telhado)] text-white px-6 py-3 font-bold text-xl">
+            Artificer e Mago — O Arquiteto da Cidade
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 3 pessoas</p>
+            <p class="text-gray-700">Estruturar o dicionário de tabelas que define como os bancos irão funcionar. A apresentação visual deve conter todos os dicionários utilizados na cidade.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado)] missao-principal" data-missao="Cavaleiro">
+          <div class="bg-[var(--cor-telhado)] text-white px-6 py-3 font-bold text-xl">
+            Cavaleiro — Colocando Ordem
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 4 pessoas</p>
+            <p class="text-gray-700">Garantir que todos os dados e páginas das pessoas estejam atualizados, além de implementar um meio de atualização otimizado.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado)] missao-principal" data-missao="Mercador">
+          <div class="bg-[var(--cor-telhado)] text-white px-6 py-3 font-bold text-xl">
+            Mercador — Potência
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Obter 15 moedas nesta semana.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado)] missao-principal" data-missao="Herói">
+          <div class="bg-[var(--cor-telhado)] text-white px-6 py-3 font-bold text-xl">
+            Herói — Inquebrável
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Grupo do herói (até 8 pessoas)</p>
+            <p class="text-gray-700">Nenhum integrante do grupo do herói pode morrer nesta semana.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+
+        <!-- Missões Bonus -->
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Artificer Bonus Nossas Honras">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Artificer Bonus — Nossas Honras
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Criar medalhas para todas as conquistas já obtidas: Espantalho, Rei Goblin, Aracne, Arena e os 3 desafios da semana passada.</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 3 e sem essência (nível 3 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Artificer Bonus Comemoração">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Artificer Bonus — Comemoração
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Criar uma tela de recompensas para os itens do chefe.</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 3 ou essência (nível 3 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Cavaleiro Bonus Elo dos Pedidos">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Cavaleiro Bonus — Elo dos Pedidos
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos que quiserem entrar na missão</p>
+            <p class="text-gray-700">Para participar, cada um deverá falar com Gustavo, que fará o sorteio dos grupos.</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 3 e sem essência (nível 3 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Mago Bonus Estudo Dirigido das Normas">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Mago Bonus — Estudo Dirigido das Normas
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 3 pessoas</p>
+            <p class="text-gray-700">Realizar um estudo sobre as normas da ABNT e apresentar um esqueleto completo, incluindo regras de referência durante o texto e a bibliografia.</p>
+            <p class="text-gray-700"><strong>Recompensa:</strong> Pode ganhar essência</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 4 ou essência (nível 4 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Mago Bonus A Obra do Git">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Mago Bonus — A Obra do Git
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 2 pessoas</p>
+            <p class="text-gray-700">Criar um exemplo prático, desenvolvendo novas branches e realizando merges funcionais.</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 3 e sem essência (nível 3 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-verde)] missao-bonus" data-missao="Mercador Bonus Seu Grande Leilão">
+          <div class="bg-[var(--cor-verde)] text-white px-6 py-3 font-bold text-xl">
+            Mercador Bonus — Seu Grande Leilão
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Leiloar 1 item que alcance, no mínimo, 5 moedas.</p>
+            <p class="text-gray-700"><strong>Limite:</strong> Até nível 3 e sem essência (nível 3 não evolui)</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+
+        <!-- Missões Finais -->
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Artificer Retrato do Chefe Final">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Artificer — Retrato do Chefe Final
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Fazer uma imagem do chefe final e colocar no site mostrando a vida e os ataques.</p>
+            <p class="text-gray-700"><strong>Recompensa:</strong> Só ganha um nível</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Artificer Maquete do Chefe">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Artificer — Maquete do Chefe
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Fazer uma maquete do chefe.</p>
+            <p class="text-gray-700"><strong>Recompensa:</strong> Só ganha um nível</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Artificer Encarnar o Chefe">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Artificer — Encarnar o Chefe
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa</p>
+            <p class="text-gray-700">Fazer com quem for apresentar o chefe na batalha esteja a caráter vestido como o chefe.</p>
+            <p class="text-gray-700"><strong>Recompensa:</strong> Só ganha um nível</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Cavaleiro Site de Batalha em Tempo Real">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Cavaleiro — Site de Batalha em Tempo Real
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa (tarefas exclusivas, 1 por pessoa – até 4 pessoas no total para Cavaleiro)</p>
+            <p class="text-gray-700">Criar um site onde todos que estão lutando possam registrar o dano e aparecer o resultado em tempo real.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Cavaleiro Fichas de Personagem">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Cavaleiro — Fichas de Personagem
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa (tarefas exclusivas, 1 por pessoa – até 4 pessoas no total para Cavaleiro)</p>
+            <p class="text-gray-700">Garantir que todos os membros do grupo tenham a página do personagem (não dá nível).</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Cavaleiro Auditoria de Usabilidade">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Cavaleiro — Auditoria de Usabilidade
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 1 pessoa (tarefas exclusivas, 1 por pessoa – até 4 pessoas no total para Cavaleiro)</p>
+            <p class="text-gray-700">Fazer pesquisa sobre o site para avaliar navegabilidade, usabilidade e acessibilidade, visando melhorias.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mago Harmonia">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mago — Harmonia
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos</p>
+            <p class="text-gray-700">Reunir todas as páginas em um único lugar (sem nível).</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mago Preparação do TCC">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mago — Preparação do TCC
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos</p>
+            <p class="text-gray-700">Criar uma página do seu TCC com tudo que foi feito até aqui, relacionada ao site.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mago O Livro">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mago — O Livro
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> No máximo duas pessoas</p>
+            <p class="text-gray-700">Fazer a apresentação do livro (no máximo duas pessoas) → cada dupla que apresentar deixa o chefe mais forte.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mercador Alianças Docentes">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mercador — Alianças Docentes
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 3 pessoas</p>
+            <p class="text-gray-700">Convencer 3 professores a apoiarem o seu lado (3 pessoas ganham nível).</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mercador Todos Equipados">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mercador — Todos Equipados
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos</p>
+            <p class="text-gray-700">Garantir que todos os membros tenham armas que atinjam todos os números (não dá nível).</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mercador Riqueza Absoluta">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mercador — Riqueza Absoluta
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> 3 pessoas</p>
+            <p class="text-gray-700">O lado com mais dinheiro ganha → distribuir o nível entre 3 pessoas.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Mercador Troca Justa">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Mercador — Troca Justa
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Todos</p>
+            <p class="text-gray-700">Trocar 3 itens → sobe nível.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+        <div class="bg-[var(--cor-pedra-clara)] rounded-2xl shadow-xl border border-[var(--cor-telhado-escuro)] missao-final" data-missao="Herói Auxílio do Herói">
+          <div class="bg-[var(--cor-telhado-escuro)] text-white px-6 py-3 font-bold text-xl">
+            Herói — Auxílio do Herói
+          </div>
+          <div class="p-8">
+            <p class="text-gray-700 mb-2"><strong>Participantes:</strong> Herói e todo o seu lado</p>
+            <p class="text-gray-700">O herói e todo o seu lado precisam ajudar quem não está conseguindo terminar sua parte do site. A pessoa ajudada assina o papel. Essa assinatura vale por duas pessoas.</p>
+            <ul class="participantes list-disc pl-6 text-gray-700 mt-4"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIOS -->
+  <section class="py-16 bg-[var(--cor-pedra-clara)]">
+    <div class="max-w-4xl mx-auto px-6 space-y-10">
+      <div class="bg-white p-8 rounded-2xl shadow-lg border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-telhado-escuro)]">Entrar em uma Missão</h3>
+        <div class="space-y-4">
+          <input type="text" id="nome" placeholder="Seu nome" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-telhado)]" required>
+          <select id="missao" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-verde)]" required>
+            <option value="">Selecione a missão</option>
+            <option value="Artificer e Mago">Artificer e Mago: O Arquiteto da Cidade</option>
+            <option value="Cavaleiro">Cavaleiro: Colocando Ordem</option>
+            <option value="Mercador">Mercador: Potência</option>
+            <option value="Herói">Herói: Inquebrável</option>
+            <option value="Artificer Bonus Nossas Honras">Artificer Bonus: Nossas Honras</option>
+            <option value="Artificer Bonus Comemoração">Artificer Bonus: Comemoração</option>
+            <option value="Cavaleiro Bonus Elo dos Pedidos">Cavaleiro Bonus: Elo dos Pedidos</option>
+            <option value="Mago Bonus Estudo Dirigido das Normas">Mago Bonus: Estudo Dirigido das Normas</option>
+            <option value="Mago Bonus A Obra do Git">Mago Bonus: A Obra do Git</option>
+            <option value="Mercador Bonus Seu Grande Leilão">Mercador Bonus: Seu Grande Leilão</option>
+            <option value="Missão semanal parte 1">Missão semanal parte 1: Perfil do Aventureiro</option>
+            <option value="Artificer Retrato do Chefe Final">Artificer: Retrato do Chefe Final</option>
+            <option value="Artificer Maquete do Chefe">Artificer: Maquete do Chefe</option>
+            <option value="Artificer Encarnar o Chefe">Artificer: Encarnar o Chefe</option>
+            <option value="Cavaleiro Site de Batalha em Tempo Real">Cavaleiro: Site de Batalha em Tempo Real</option>
+            <option value="Cavaleiro Fichas de Personagem">Cavaleiro: Fichas de Personagem</option>
+            <option value="Cavaleiro Auditoria de Usabilidade">Cavaleiro: Auditoria de Usabilidade</option>
+            <option value="Mago Harmonia">Mago: Harmonia</option>
+            <option value="Mago Preparação do TCC">Mago: Preparação do TCC</option>
+            <option value="Mago O Livro">Mago: O Livro</option>
+            <option value="Mercador Alianças Docentes">Mercador: Alianças Docentes</option>
+            <option value="Mercador Todos Equipados">Mercador: Todos Equipados</option>
+            <option value="Mercador Riqueza Absoluta">Mercador: Riqueza Absoluta</option>
+            <option value="Mercador Troca Justa">Mercador: Troca Justa</option>
+            <option value="Herói Auxílio do Herói">Herói: Auxílio do Herói</option>
+          </select>
+          <button id="submitMissao" class="bg-[var(--cor-telhado)] text-white px-6 py-3 rounded-lg shadow hover:bg-[var(--cor-telhado-escuro)]">Participar</button>
+        </div>
+      </div>
+      <div class="text-center">
+        <button id="resetar" class="bg-[var(--cor-verde)] text-white px-6 py-3 rounded-lg shadow hover:bg-green-900">Resetar Todas as Missões</button>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-telhado-escuro)]">Sugerir Nova Missão</h3>
+        <div class="space-y-4">
+          <input type="text" id="sugestaoNome" placeholder="Seu nome" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-[var(--cor-telhado)]" required>
+          <textarea id="sugestaoMissao" placeholder="Descreva a missão sugerida" class="w-full p-3 border rounded-lg h-32 focus:ring-2 focus:ring-[var(--cor-verde)]" required></textarea>
+          <button id="submitSugestao" class="bg-[var(--cor-verde)] text-white px-6 py-3 rounded-lg shadow hover:bg-green-900">Enviar Sugestão</button>
+        </div>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg border border-[var(--cor-pedra)]">
+        <h3 class="text-2xl font-semibold mb-4 text-[var(--cor-telhado-escuro)]">Missões Sugeridas</h3>
+        <ul id="listaSugestoes" class="list-disc pl-6 text-gray-700"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTÃO DE ACESSIBILIDADE -->
+  <button id="acessibilidadeBtn" class="acessibilidade-btn" aria-label="Abrir menu de acessibilidade">♿</button>
+  <div id="painelAcessibilidade" class="painel-acessibilidade" role="menu" aria-label="Opções de acessibilidade">
+    <button id="aumentarFonte">Aumentar Fonte</button>
+    <button id="diminuirFonte">Diminuir Fonte</button>
+    <button id="altoContraste">Alto Contraste</button>
+    <button id="resetarAcessibilidade">Resetar</button>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    // Menu Responsivo
+    const btnMenu = document.getElementById('btnMenu');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileOverlay');
+
+    function toggleMenu() {
+      const isOpen = sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+      sidebar.setAttribute('aria-hidden', !isOpen);
+      if (isOpen) sidebar.querySelector('a').focus();
+    }
+
+    btnMenu.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      sidebar.setAttribute('aria-hidden', 'true');
+      btnMenu.focus();
+    });
+
+    document.querySelectorAll('.sidebar a, .btn-close').forEach(el => {
+      el.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+        sidebar.setAttribute('aria-hidden', 'true');
+        btnMenu.focus();
+      });
+    });
+
+    // Painel de Acessibilidade
+    const btnAcess = document.getElementById("acessibilidadeBtn");
+    const painelAcess = document.getElementById("painelAcessibilidade");
+
+    btnAcess.addEventListener("click", (e) => {
+      e.stopPropagation();
+      painelAcess.classList.toggle("active");
+      if (painelAcess.classList.contains("active")) painelAcess.querySelector('button').focus();
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!painelAcess.contains(e.target) && e.target !== btnAcess) painelAcess.classList.remove("active");
+    });
+
+    // Funcionalidades de Acessibilidade
+    let fontSize = 16;
+
+    document.getElementById("aumentarFonte").onclick = () => {
+      fontSize += 2;
+      document.body.style.fontSize = fontSize + "px";
+    };
+
+    document.getElementById("diminuirFonte").onclick = () => {
+      fontSize = Math.max(10, fontSize - 2);
+      document.body.style.fontSize = fontSize + "px";
+    };
+
+    document.getElementById("altoContraste").onclick = () => {
+      document.body.style.background = "#000";
+      document.body.style.color = "#FFD700";
+      document.querySelectorAll("table, th, td").forEach(el => {
+        el.style.background = "#000";
+        el.style.color = "#FFD700";
+        el.style.borderColor = "#FFD700";
+      });
+    };
+
+    document.getElementById("resetarAcessibilidade").onclick = () => {
+      fontSize = 16;
+      document.body.style.fontSize = "16px";
+      document.body.style.background = "";
+      document.body.style.color = "";
+      document.querySelectorAll("table, th, td").forEach(el => {
+        el.style.background = "";
+        el.style.color = "";
+        el.style.borderColor = "";
+      });
+    };
+
+    // Filtro de Missões
+    const showPrincipais = document.getElementById('showPrincipais');
+    const showBonus = document.getElementById('showBonus');
+    const showFinais = document.getElementById('showFinais');
+    const allMissoes = document.querySelectorAll('#quadro > div');
+
+    function filterMissoes(category) {
+      allMissoes.forEach(missao => {
+        missao.style.display = missao.classList.contains(category) ? 'block' : 'none';
+      });
+    }
+
+    showPrincipais.addEventListener('click', () => filterMissoes('missao-principal'));
+    showBonus.addEventListener('click', () => filterMissoes('missao-bonus'));
+    showFinais.addEventListener('click', () => filterMissoes('missao-final'));
+
+    // Mostrar principais por default
+    filterMissoes('missao-principal');
+
+    // Formulários
+    const formMissao = document.getElementById("formMissao");
+    const formSugestao = document.getElementById("formSugestao");
+    const resetarBtn = document.getElementById("resetar");
+
+    function salvarDados() {
+      const dados = {};
+      document.querySelectorAll("[data-missao]").forEach(card => {
+        const nomeMissao = card.dataset.missao;
+        const participantes = Array.from(card.querySelectorAll(".participantes li")).map(li => li.textContent);
+        dados[nomeMissao] = participantes;
+      });
+      localStorage.setItem("missoes", JSON.stringify(dados));
+    }
+
+    function carregarDados() {
+      const dados = JSON.parse(localStorage.getItem("missoes") || "{}");
+      Object.keys(dados).forEach(missao => {
+        const card = document.querySelector(`[data-missao='${missao}']`);
+        if (card) {
+          const ul = card.querySelector(".participantes");
+          dados[missao].forEach(nome => {
+            const li = document.createElement("li");
+            li.textContent = nome;
+            ul.appendChild(li);
+          });
+        }
+      });
+
+      const sugestoes = JSON.parse(localStorage.getItem("sugestoes") || "[]");
+      sugestoes.forEach(s => {
+        const li = document.createElement("li");
+        li.textContent = s;
+        document.getElementById("listaSugestoes").appendChild(li);
+      });
+    }
+
+    document.getElementById("submitMissao").addEventListener("click", e => {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value.trim();
+      const missao = document.getElementById("missao").value;
+
+      if (!nome || !missao) return;
+
+      const card = document.querySelector(`[data-missao='${missao}'] .participantes`);
+      const li = document.createElement("li");
+      li.textContent = nome;
+      card.appendChild(li);
+
+      salvarDados();
+      document.getElementById("nome").value = "";
+      document.getElementById("missao").value = "";
+    });
+
+    document.getElementById("submitSugestao").addEventListener("click", e => {
+      e.preventDefault();
+      const nome = document.getElementById("sugestaoNome").value.trim();
+      const missao = document.getElementById("sugestaoMissao").value.trim();
+
+      if (!nome || !missao) return;
+
+      const sugestao = `${nome} sugeriu: ${missao}`;
+      const li = document.createElement("li");
+      li.textContent = sugestao;
+      document.getElementById("listaSugestoes").appendChild(li);
+
+      const sugestoes = JSON.parse(localStorage.getItem("sugestoes") || "[]");
+      sugestoes.push(sugestao);
+      localStorage.setItem("sugestoes", JSON.stringify(sugestoes));
+
+      document.getElementById("sugestaoNome").value = "";
+      document.getElementById("sugestaoMissao").value = "";
+    });
+
+    resetarBtn.addEventListener("click", () => {
+      if (confirm("Tem certeza que deseja resetar todas as missões e sugestões?")) {
+        localStorage.clear();
+        document.querySelectorAll(".participantes").forEach(ul => ul.innerHTML = "");
+        document.getElementById("listaSugestoes").innerHTML = "";
+      }
+    });
+
+    carregarDados();
+  </script>
+</body>
+</html>
+
+
+
+</body>
+</html>
